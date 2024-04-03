@@ -22,6 +22,7 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
         imageUrl: "https://image.png",
 
         // >> [FNM: Task 2.4] - Отправлять в АПИ (Создать запрос в АПИ "POST" отправлять эти значения)
+        // >> [FNM: Task 2.4] - Возвращать на главную страницу goToPage(POSTS_PAGE)
       });
     });
   };
