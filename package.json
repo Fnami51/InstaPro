@@ -1,0 +1,16 @@
+{
+  "name": "instapro",
+  "version": "1.0.0",
+  "description": "MVP аналога популярной соц. сети для обмена фотографиями",
+  "main": "index.js",
+  "scripts": {
+  },
+  "keywords": [
+    "5160"
+  ],
+  "author": "Fnami51",
+  "license": "ISC",
+  "dependencies": {
+    "date-fns": "^3.6.0"
+  }
+}
