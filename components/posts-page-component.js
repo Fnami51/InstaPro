@@ -1,10 +1,9 @@
 import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { posts, goToPage } from "../index.js";
+import { formatDistanceToNowStrict } from "../node_modules/date-fns/formatDistanceToNowStrict.mjs";
 
 export function renderPostsPageComponent({ appEl }) {
-  // TODO: реализовать рендер постов из api
-  console.log("Актуальный список постов:", posts);
   const postsHtml = [];
 
   posts.forEach((post) => {
@@ -30,18 +29,12 @@ export function renderPostsPageComponent({ appEl }) {
         ${post.description}
       </p>
       <p class="post-date">
-        19 минут назад
+        ${formatDistanceToNowStrict(post.createdAt)} ago
       </p>
     </li>`
     )
   })
 
-  // >>[FNM: Задание 1] Тут перенести данные из posts в цикл, который будет создавать новые элементы в новый массив, беря данный из массива posts. Затем отформатировать всё в строчку и закинуть в переменную appHtml
-
-  /**
-   * TODO: чтобы отформатировать дату создания поста в виде "19 минут назад"
-   * можно использовать https://date-fns.org/v2.29.3/docs/formatDistanceToNow
-   */
   const appHtml = `
               <div class="page-container">
                 <div class="header-container"></div>
