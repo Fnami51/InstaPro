@@ -111,6 +111,8 @@ const renderApp = () => {
       appEl,
       onAddPostClick({ description, imageUrl }) {
         // TODO: реализовать добавление поста в API
+        
+        // >> [FNM: Task 2.4] - Отправлять в АПИ (Создать запрос в АПИ "POST" отправлять эти значения)
         console.log("Добавляю пост...", { description, imageUrl });
         goToPage(POSTS_PAGE);
       },
@@ -130,4 +132,4 @@ const renderApp = () => {
   }
 };
 
-goToPage(POSTS_PAGE);
+goToPage(ADD_POSTS_PAGE);

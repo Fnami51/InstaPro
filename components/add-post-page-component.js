@@ -1,11 +1,11 @@
 import { uploadImage } from "../api.js";
 import { renderHeaderComponent } from "./header-component.js";
+import { renderUploadImageComponent } from "./upload-image-component.js";
 
 export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
-  const render = () => {
-    // TODO: Реализовать страницу добавления поста
+  let imageUrl = "";
 
-    // >> [FNM: Task 2.1] - Скопировать HTML у конкурентов
+  const render = () => {
     const appHtml = `
     <div class="page-container">
       <div class="header-container">
@@ -26,7 +26,7 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
   <div class="upload=image">
       
             <label class="file-upload-label secondary-button">
-                <input id="image-file" type="file" class="file-upload-input" style="display:none">
+                <input type="file" class="file-upload-input" style="display:none">
                 Выберите фото
             </label>
           
@@ -48,21 +48,20 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
       element: document.querySelector(".header-container"),
     });
 
-    const descriptionUser = getElementById("description");
-    const imageFile = getElementById("image-file");
+    const descriptionUser = document.getElementById("description");
+    
+    renderUploadImageComponent({
+      element: appEl.querySelector(".upload-image-container"),
+      onImageUrlChange(newImageUrl) {
+        imageUrl = newImageUrl;
+      },
+    });
 
     document.getElementById("add-button").addEventListener("click", () => {
       onAddPostClick({
-        // >> [FNM: Task 2.2] - Закидывать сюда поле_ввода.value
         description: descriptionUser.value,
-
-        // >> [FNM: Task 2.3] - imageUr вставлять ссылку использую upload-image-component
-        imageUrl: imageFile.value,
-
-        // >> [FNM: Task 2.4] - Отправлять в АПИ (Создать запрос в АПИ "POST" отправлять эти значения)
-        // >> [FNM: Task 2.4] - Возвращать на главную страницу goToPage(POSTS_PAGE)
+        imageUrl
       });
-      console.log(imageUrl) //>>log
     });
   };
 
