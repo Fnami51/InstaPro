@@ -1,4 +1,4 @@
-import { getPosts } from "./api.js";
+import { getPosts, uploadPost } from "./api.js";
 import { renderAddPostPageComponent } from "./components/add-post-page-component.js";
 import { renderAuthPageComponent } from "./components/auth-page-component.js";
 import {
@@ -110,10 +110,16 @@ const renderApp = () => {
     return renderAddPostPageComponent({
       appEl,
       onAddPostClick({ description, imageUrl }) {
-        // TODO: реализовать добавление поста в API
-        
-        // >> [FNM: Task 2.4] - Отправлять в АПИ (Создать запрос в АПИ "POST" отправлять эти значения)
-        console.log("Добавляю пост...", { description, imageUrl });
+        uploadPost({ token: getToken(), description, imageUrl })
+        .then((newPosts) => {
+          page = POSTS_PAGE;
+          posts = newPosts;
+          renderApp();
+        })
+        .catch((error) => {
+          console.error(error);
+          goToPage(POSTS_PAGE);
+        });
         goToPage(POSTS_PAGE);
       },
     });
@@ -132,4 +138,4 @@ const renderApp = () => {
   }
 };
 
-goToPage(ADD_POSTS_PAGE);
+goToPage(POSTS_PAGE);
