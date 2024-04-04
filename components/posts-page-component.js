@@ -56,4 +56,8 @@ export function renderPostsPageComponent({ appEl }) {
       });
     });
   }
+
+  //>>[FNM - Task 4.1] - Повесить обработчик кликов на лайк
+  //>>[FNM - Task 4.2] - Сделать запрос в АПИ (в api.js)
+  //>>[FNM - Task 4.3] - Изменять цвет лайка с помощью классов 
 }
