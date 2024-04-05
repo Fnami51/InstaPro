@@ -1,7 +1,6 @@
 import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { getToken, posts, goToPage } from "../index.js";
-import { formatDistanceToNowStrict } from "../node_modules/date-fns/formatDistanceToNowStrict.mjs";
 import { likeChange } from "../api.js";
 import { timeAgo } from "../helpers.js";
 
