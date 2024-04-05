@@ -32,7 +32,7 @@ export function renderPostsPageComponent({ appEl }) {
         ${post.description}
       </p>
       <p class="post-date">
-        ${timeAgo(post.createdAt)} ago
+        ${timeAgo(new Date(post.createdAt))}
       </p>
     </li>`
     )
