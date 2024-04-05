@@ -1,8 +1,9 @@
-import { USER_POSTS_PAGE, POSTS_PAGE } from "../routes.js";
+import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
-import { getToken, posts, goToPage, renderApp } from "../index.js";
+import { getToken, posts, goToPage } from "../index.js";
 import { formatDistanceToNowStrict } from "../node_modules/date-fns/formatDistanceToNowStrict.mjs";
-import { likeChange, getPosts } from "../api.js";
+import { likeChange } from "../api.js";
+import { timeAgo } from "../helpers.js";
 
 export function renderPostsPageComponent({ appEl }) {
   const postsHtml = [];
@@ -32,7 +33,7 @@ export function renderPostsPageComponent({ appEl }) {
         ${post.description}
       </p>
       <p class="post-date">
-        ${formatDistanceToNowStrict(post.createdAt)} ago
+        ${timeAgo(post.createdAt)} ago
       </p>
     </li>`
     )
