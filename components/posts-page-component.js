@@ -1,12 +1,15 @@
 import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
-import { posts, goToPage } from "../index.js";
+import { getToken, posts, goToPage } from "../index.js";
 import { formatDistanceToNowStrict } from "../node_modules/date-fns/formatDistanceToNowStrict.mjs";
+import { likeChange } from "../api.js";
 
 export function renderPostsPageComponent({ appEl }) {
   const postsHtml = [];
 
   posts.forEach((post) => {
+    const likePosition = post.isLiked
+    let likeSvg = likePosition ? "like-active.svg" : "like-not-active.svg";
     postsHtml.push(
     `<li class="post">
       <div class="post-header" data-user-id="${post.user.id}">
@@ -17,8 +20,8 @@ export function renderPostsPageComponent({ appEl }) {
         <img class="post-image" src="${post.imageUrl}">
       </div>
       <div class="post-likes">
-        <button data-post-id="${post.id}" class="like-button">
-          <img src="./assets/images/like-active.svg">
+        <button data-id="${post.id}" data-like="${likePosition}" class="like-button">
+          <img src="./assets/images/${likeSvg}">
         </button>
         <p class="post-likes-text">
           Нравится: <strong>${post.likes.length}</strong>
@@ -57,7 +60,18 @@ export function renderPostsPageComponent({ appEl }) {
     });
   }
 
-  //>>[FNM - Task 4.1] - Повесить обработчик кликов на лайк
-  //>>[FNM - Task 4.2] - Сделать запрос в АПИ (в api.js)
-  //>>[FNM - Task 4.3] - Изменять цвет лайка с помощью классов 
+  for (let likesButtons of document.querySelectorAll(".like-button")) {
+    likesButtons.addEventListener("click", () => {
+      const postId = likesButtons.dataset.id
+      const likePositionInAPI = likesButtons.dataset.like
+
+      console.log(postId)
+      console.log(likePositionInAPI)
+      console.log("Like is pressed")
+
+      likeChange({token: getToken(),postId,likePositionInAPI})
+
+      renderPostsPageComponent({ appEl });
+    });
+  }
 }

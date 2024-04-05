@@ -91,3 +91,22 @@ export function uploadPost({ token, description, imageUrl }) {
       return data.posts;
     });
 }
+
+export function likeChange({token,postId, likePositionInAPI}) {
+  let likePosition = likePositionInAPI ? "dislike" : "like";
+  return fetch(postsHost + "/" + postId + "/" + likePosition, {
+    method: "POST",
+    headers: {
+      Authorization: token,
+    }
+  }).then((response) => {
+    if (response.status === 401) {
+      throw new Error("Нет авторизации");
+    }
+
+    return response.json();
+  })
+  .then((data) => {
+    return data.posts;
+  });
+}
