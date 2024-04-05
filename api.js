@@ -92,8 +92,7 @@ export function uploadPost({ token, description, imageUrl }) {
     });
 }
 
-export function likeChange({token,postId, likePositionInAPI}) {
-  let likePosition = likePositionInAPI ? "dislike" : "like";
+export function likeChange({token,postId, likePosition}) {
   return fetch(postsHost + "/" + postId + "/" + likePosition, {
     method: "POST",
     headers: {
@@ -107,6 +106,6 @@ export function likeChange({token,postId, likePositionInAPI}) {
     return response.json();
   })
   .then((data) => {
-    return data.posts;
+    return data.post;
   });
 }

@@ -1,8 +1,8 @@
-import { USER_POSTS_PAGE } from "../routes.js";
+import { USER_POSTS_PAGE, POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
-import { getToken, posts, goToPage } from "../index.js";
+import { getToken, posts, goToPage, renderApp } from "../index.js";
 import { formatDistanceToNowStrict } from "../node_modules/date-fns/formatDistanceToNowStrict.mjs";
-import { likeChange } from "../api.js";
+import { likeChange, getPosts } from "../api.js";
 
 export function renderPostsPageComponent({ appEl }) {
   const postsHtml = [];
@@ -19,8 +19,8 @@ export function renderPostsPageComponent({ appEl }) {
       <div class="post-image-container">
         <img class="post-image" src="${post.imageUrl}">
       </div>
-      <div class="post-likes">
-        <button data-id="${post.id}" data-like="${likePosition}" class="like-button">
+      <div id="${post.id}" class="post-likes">
+        <button data-id="${post.id}" data-like="${post.isLiked}" class="like-button">
           <img src="./assets/images/${likeSvg}">
         </button>
         <p class="post-likes-text">
@@ -60,18 +60,32 @@ export function renderPostsPageComponent({ appEl }) {
     });
   }
 
+  renderLike()
+}
+
+function renderLike() {
   for (let likesButtons of document.querySelectorAll(".like-button")) {
     likesButtons.addEventListener("click", () => {
       const postId = likesButtons.dataset.id
-      const likePositionInAPI = likesButtons.dataset.like
 
-      console.log(postId)
-      console.log(likePositionInAPI)
-      console.log("Like is pressed")
+      const likePosition = (likesButtons.dataset.like == "true") ? "dislike" : "like";
 
-      likeChange({token: getToken(),postId,likePositionInAPI})
-
-      renderPostsPageComponent({ appEl });
+      likeChange({token: getToken(), postId, likePosition})
+      .then((post) => {
+        const likeItem = document.getElementById(post.id)
+        const likePosition = post.isLiked
+        let likeSvg = likePosition ? "like-active.svg" : "like-not-active.svg";
+        likeItem.innerHTML = `
+        <div id="${post.id}" class="post-likes">
+          <button data-id="${post.id}" data-like="${post.isLiked}" class="like-button">
+            <img src="./assets/images/${likeSvg}">
+          </button>
+          <p class="post-likes-text">
+            Нравится: <strong>${post.likes.length}</strong>
+          </p>
+        </div>`;
+      renderLike();
+      })
     });
   }
 }
