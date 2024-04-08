@@ -59,7 +59,11 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
 
     document.getElementById("add-button").addEventListener("click", () => {
       onAddPostClick({
-        description: descriptionUser.value,
+        description: descriptionUser.value
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;"),
         imageUrl
       });
     });
