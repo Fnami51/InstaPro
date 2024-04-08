@@ -58,6 +58,11 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
     });
 
     document.getElementById("add-button").addEventListener("click", () => {
+      if (!descriptionUser.value) {
+        alert("Введите описание картинки");
+        return;
+      }
+      
       onAddPostClick({
         description: descriptionUser.value
           .replaceAll("&", "&amp;")
