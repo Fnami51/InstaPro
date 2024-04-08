@@ -54,3 +54,7 @@ export function timeAgo(date) {
 
   return "только что";
 }
+
+export function cheakOnline() {if (!navigator.onLine) {
+  throw new Error("Нет интернета");
+}} 
